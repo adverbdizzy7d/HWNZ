@@ -281,7 +281,15 @@ foreach ($propertyId in $allPropertyIds)
     {
         $dateStart = (Get-Date).AddDays($date)
         Write-Host "  - Crawling date $($dateStart.ToString("yyyy-MM-dd"))"
-        $availability = Get-HostelworldPropertyAvailability -propertyId $propertyId -dateStart $dateStart -numNights 1 -guests 1
+        try 
+        {
+            $availability = Get-HostelworldPropertyAvailability -propertyId $propertyId -dateStart $dateStart -numNights 1 -guests 1        
+        }
+        catch 
+        {
+            Write-Host "    ! Error fetching availability for property $propertyId on date $($dateStart.ToString("yyyy-MM-dd"))"
+            continue
+        }
 
         # write JSON to raw run folder
         $jsonPropPath = Join-Path $rawRunRoot $propertyId
