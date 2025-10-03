@@ -256,7 +256,15 @@ foreach ($cityId in $results)
     {
         $dateStart = (Get-Date).AddDays($date)
         Write-Host "Crawling city id $cityId for date $($dateStart.ToString("yyyy-MM-dd"))"
-        $propertyResult = Get-HostelworldProperties -cityId $cityId -currency 'NZD' -dateStart $dateStart -numNights 1 -guests 1
+        try
+        {
+            $propertyResult = Get-HostelworldProperties -cityId $cityId -currency 'NZD' -dateStart $dateStart -numNights 1 -guests 1
+        }
+        catch
+        {
+            Write-Host "    ! Error fetching properties for city $cityId on date $($dateStart.ToString("yyyy-MM-dd"))"
+            continue
+        }
         $propertyIds = $propertyResult.properties.id
         $allPropertyIds += $propertyIds
     }
