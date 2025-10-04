@@ -112,4 +112,4 @@ jobs:
           PR_URL: ${{ steps.create_pr.outputs.pr_url }}
         shell: pwsh
         run: |
-          gh pr merge $env:PR_URL --admin --auto --merge --delete-branch
+          gh pr merge $env:PR_URL --admin --merge --delete-branch
